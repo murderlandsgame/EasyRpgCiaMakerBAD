@@ -26,6 +26,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: cmake
       run: |
+        export rpgdir="${PWD}"
         apt-get update
         apt-get install -yqq --no-install-recommends --no-install-suggests \
             ca-certificates build-essential cmake ninja-build git \
@@ -35,25 +36,27 @@ jobs:
             libvorbis-dev libopusfile-dev libspeexdsp-dev \
             expat meson \
             libdrm-dev libgbm-dev # only needed for sdl2 on debian 11
-        git clone --recursive https://github.com/benhoyt/inih.git
-        cd inih
+        git clone --recursive https://github.com/benhoyt/inih.git "$rpgdir"
+        cd "$rpgdir/inih"
         mkdir 3ds
         cd 3ds 
         meson .. 
         meson install
         cd ../..
-        git clone --recursive https://github.com/libexpat/libexpat.git
+        git clone --recursive https://github.com/libexpat/libexpat.git 
         cd libexpat/expat
         cmake .
         make install
         cd ../..
         git clone --recursive https://github.com/EasyRPG/liblcf
         cd liblcf
-        cmake . -B 3dsout
+        cmake . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake
         cd 3dsout
         make install
         cd ../..
-        cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake -DCMAKE_MODULE_PATH=/usr/local/lib/cmake
+        git clone --recursive https://github.com/EasyRPG/Player
+        cd Player
+        cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake
     - name: make final
       run: make -j42069
     - name: Upload a Build Artifact
