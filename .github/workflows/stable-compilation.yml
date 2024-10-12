@@ -35,6 +35,9 @@ jobs:
             libvorbis-dev libopusfile-dev libspeexdsp-dev \
             expat \
             libdrm-dev libgbm-dev # only needed for sdl2 on debian 11
+        git clone --recursive https://github.com/benhoyt/inih.git
+        git clone --recursive https://github.com/libexpat/libexpat.git
+        git clone --recursive https://github.com/EasyRPG/liblcf
         git clone --recursive https://github.com/microsoft/vcpkg.git
         cd vcpkg
         ./bootstrap-vcpkg.sh
