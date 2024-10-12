@@ -26,7 +26,9 @@ jobs:
     - uses: actions/checkout@v3
     - name: cmake
       run: |
-        export rpgdir="${PWD}"
+        export rpgdir="${PWD}\3DSRPG"
+        mkdir "$rpgdir"
+        
         apt-get update
         apt-get install -yqq --no-install-recommends --no-install-suggests \
             ca-certificates build-essential cmake ninja-build git \
@@ -36,27 +38,36 @@ jobs:
             libvorbis-dev libopusfile-dev libspeexdsp-dev \
             expat meson \
             libdrm-dev libgbm-dev # only needed for sdl2 on debian 11
-        git clone --recursive https://github.com/benhoyt/inih.git "$rpgdir"
+            
+        cd "$rpgdir"
+        git clone --recursive https://github.com/benhoyt/inih.git "$rpgdir/inih"
         cd "$rpgdir/inih"
         mkdir 3ds
         cd 3ds 
         meson .. 
         meson install
         cd ../..
-        git clone --recursive https://github.com/libexpat/libexpat.git 
+
+        cd "$rpgdir"
+        git clone --recursive https://github.com/libexpat/libexpat.git "$rpgdir/libexpat"
         cd libexpat/expat
         cmake .
-        make install
+        make install -j42069
         cd ../..
+        
+        cd "$rpgdir"
         git clone --recursive https://github.com/EasyRPG/liblcf
         cd liblcf
         cmake . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake
         cd 3dsout
-        make install
+        make install -j42069
         cd ../..
+
+        cd "$rpgdir"
         git clone --recursive https://github.com/EasyRPG/Player
         cd Player
         cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake
+        
     - name: make final
       run: make -j42069
     - name: Upload a Build Artifact
@@ -65,5 +76,5 @@ jobs:
     # Artifact name
         name: 3ds
     # A file, directory or wildcard pattern that describes what to upload
-        path: 3dsout
+        path: "$rpgdir"
     # The desired behavior if no files are found using the provided path.
