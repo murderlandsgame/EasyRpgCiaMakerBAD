@@ -53,11 +53,7 @@ jobs:
         cd 3dsout
         make install
         cd ../..
-        ls /opt
-        ls /opt/usr
-        ls /opt/usr/lib
-        ls /opt/usr/lib/cmake
-        cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake -DCMAKE_MODULE_PATH=Findliblcf.cmake -DCMAKE_PREFIX_PATH=liblcf -Dliblcf_DIR=/opt/usr/lib/cmake/liblicf
+        cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake -DCMAKE_MODULE_PATH=Findliblcf.cmake -DCMAKE_PREFIX_PATH=liblcf -Dliblcf_DIR=/opt/devkitpro/usr/lib/cmake/liblicf
     - name: make 
       run: make
     - name: Upload a Build Artifact
