@@ -53,7 +53,7 @@ jobs:
         cd 3dsout
         make install
         cd ../..
-        export CMAKE_MODULE_PATH /opt/usr/lib/cmake/liblcf
+        export CMAKE_MODULE_PATH=/opt/usr/lib/cmake/liblcf
         cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake
     - name: make 
       run: make
