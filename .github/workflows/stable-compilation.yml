@@ -36,7 +36,7 @@ jobs:
             libdrm-dev libgbm-dev # only needed for sdl2 on debian 11
         git clone --recursive https://github.com/microsoft/vcpkg.git
         cd vcpkg
-        ./bootstrap-vcpkg.bat
+        ./bootstrap-vcpkg.sh
         vcpkg install inih
         vcpkg install expat
         vcpkg install liblcf
