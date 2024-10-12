@@ -37,7 +37,7 @@ jobs:
             libfreetype6-dev libharfbuzz-dev libmpg123-dev libsndfile-dev \
             libvorbis-dev libopusfile-dev libspeexdsp-dev \
             expat meson \
-            libdrm-dev libgbm-dev # only needed for sdl2 on debian 11 \    
+            libdrm-dev libgbm-dev \ # only needed for sdl2 on debian 11 
         && \
         ((cd "$rpgdir" && \
         git clone --recursive https://github.com/benhoyt/inih.git "$rpgdir/inih" && \
