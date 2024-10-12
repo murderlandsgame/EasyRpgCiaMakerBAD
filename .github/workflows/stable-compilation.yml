@@ -39,36 +39,36 @@ jobs:
            expat meson \
            libdrm-dev libgbm-dev \
         && \
-        ((cd "$rpgdir" && \
+        (cd "$rpgdir" && \
         git clone --recursive https://github.com/benhoyt/inih.git "$rpgdir/inih" && \
         cd "$rpgdir/inih" && \
         mkdir 3ds && \
         cd 3ds && \
         meson .. && \
         meson install && \
-        cd ../..)&) \
+        cd ../.. &) \
         && \
-        ((cd "$rpgdir" && \
+        (cd "$rpgdir" && \
         git clone --recursive https://github.com/libexpat/libexpat.git "$rpgdir/libexpat" && \
         cd "$rpgdir/libexpat/expat" && \
         cmake . && \
         make install -j42069 && \
-        cd ../..)&) \
+        cd ../.. &) \
         && \
-        ((cd "$rpgdir" && \
+        (cd "$rpgdir" && \
         git clone --recursive https://github.com/EasyRPG/liblcf "$rpgdir/liblcf" && \
         cd liblcf && \
         cmake . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake && \
         cd 3dsout && \
         make install -j42069 && \
-        cd ../..)&) \
+        cd ../.. &) \
         && \
-        ((cd "$rpgdir" && \
+        (cd "$rpgdir" && \
         git clone --recursive https://github.com/EasyRPG/Player "$rpgdir/Player" && \
         cd Player && \
         cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake \
         && \
-        cd "$rpgdir/../")&) \
+        cd "$rpgdir/../" &) \
         && \
         cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake && \
         echo done;
