@@ -26,7 +26,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: cmake
       run: |
-        export rpgdir="${PWD}\3DSRPG" && \
+        export rpgdir="${PWD}/3DSRPG" && \
         mkdir "$rpgdir"
         
         apt-get update
@@ -48,20 +48,20 @@ jobs:
         meson install 
         cd ../..
 
-        cd "$rpgdir"
+        ((cd "$rpgdir" && \
         git clone --recursive https://github.com/libexpat/libexpat.git "$rpgdir/libexpat" && \
-        cd "$rpgdir/libexpat/expat"
-        cmake .
-        make install -j42069
-        cd ../..
+        cd "$rpgdir/libexpat/expat" && \
+        cmake . && \
+        make install -j42069 && \
+        cd ../..)&)
         
-        cd "$rpgdir"
+        ((cd "$rpgdir" && \
         git clone --recursive https://github.com/EasyRPG/liblcf "$rpgdir/liblcf" && \
-        cd liblcf
-        cmake . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake
-        cd 3dsout
-        make install -j42069
-        cd ../..
+        cd liblcf && \
+        cmake . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake && \
+        cd 3dsout && \
+        make install -j42069 && \
+        cd ../..)&)
 
         cd "$rpgdir"
         git clone --recursive https://github.com/EasyRPG/Player "$rpgdir/Player" && \
