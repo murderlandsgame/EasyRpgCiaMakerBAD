@@ -27,9 +27,9 @@ jobs:
     - name: cmake
       run: |
         export rpgdir="${PWD}/3DSRPG" && \
-        mkdir "$rpgdir"
-        
-        apt-get update
+        mkdir "$rpgdir" \
+        && \
+        apt-get update && \
         apt-get install -yqq --no-install-recommends --no-install-suggests \
             ca-certificates build-essential cmake ninja-build git \
             libicu-dev libexpat1-dev libinih-dev nlohmann-json3-dev \
@@ -37,7 +37,7 @@ jobs:
             libfreetype6-dev libharfbuzz-dev libmpg123-dev libsndfile-dev \
             libvorbis-dev libopusfile-dev libspeexdsp-dev \
             expat meson \
-            libdrm-dev libgbm-dev # only needed for sdl2 on debian 11
+            libdrm-dev libgbm-dev # only needed for sdl2 on debian 11 \    
         && \
         ((cd "$rpgdir" && \
         git clone --recursive https://github.com/benhoyt/inih.git "$rpgdir/inih" && \
@@ -46,8 +46,8 @@ jobs:
         cd 3ds && \
         meson .. && \
         meson install && \
-        cd ../..)&)
-
+        cd ../..)&) \
+        && \
         ((cd "$rpgdir" && \
         git clone --recursive https://github.com/libexpat/libexpat.git "$rpgdir/libexpat" && \
         cd "$rpgdir/libexpat/expat" && \
@@ -61,16 +61,17 @@ jobs:
         cmake . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake && \
         cd 3dsout && \
         make install -j42069 && \
-        cd ../..)&)
+        cd ../..)&) \
         && \
-        cd "$rpgdir" \
+        ((cd "$rpgdir" \
         git clone --recursive https://github.com/EasyRPG/Player "$rpgdir/Player" && \
         cd Player
         cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake ; \
         && \
-        cd "$rpgdir/../" \
+        cd "$rpgdir/../")&) \
         && \
-        cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake
+        cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake && \
+        echo done;
     - name: make final
       run: make -j42069
     - name: Upload a Build Artifact
