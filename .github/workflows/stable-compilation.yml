@@ -49,9 +49,10 @@ jobs:
         cd ../..
         git clone --recursive https://github.com/EasyRPG/liblcf
         cd liblcf
-        cmake .
+        cmake . -B 3dsout
+        cd 3dsout
         make install
-        cd ..
+        cd ../..
         cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake
     - name: make 
       run: make
