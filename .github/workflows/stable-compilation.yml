@@ -33,7 +33,7 @@ jobs:
             libsdl2-dev libpng-dev libpixman-1-dev libfmt-dev \
             libfreetype6-dev libharfbuzz-dev libmpg123-dev libsndfile-dev \
             libvorbis-dev libopusfile-dev libspeexdsp-dev \
-            inih liblcf expat \
+            expat \
             libdrm-dev libgbm-dev # only needed for sdl2 on debian 11
         git clone --recursive https://github.com/microsoft/vcpkg.git
         cd vcpkg
