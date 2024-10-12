@@ -19,13 +19,20 @@ defaults:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     container: devkitpro/devkitarm:latest
 
     steps:
     - uses: actions/checkout@v3
     - name: cmake
-      run: cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake
+      run: 
+        git clone --recursive https://github.com/microsoft/vcpkg.git
+        cd vcpkg
+        ./bootstrap-vcpkg.bat
+        vcpkg install inih
+        vcpkg install expat
+        vcpkg install liblcf
+        cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake
     - name: make 
       run: make
     - name: Upload a Build Artifact
