@@ -18,6 +18,24 @@ defaults:
     shell: bash
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: devkitpro/devkitarm:latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: cmake
+      run: cmake-S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake
+    - name: make 
+      run: make
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.4.3
+      with:
+    # Artifact name
+        name: 3ds
+    # A file, directory or wildcard pattern that describes what to upload
+        path: 3dsout
+    # The desired behavior if no files are found using the provided path.
   docker:
     name: ${{ matrix.image }}
     runs-on: ubuntu-latest
