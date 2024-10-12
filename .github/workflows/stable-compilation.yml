@@ -37,8 +37,6 @@ jobs:
             libdrm-dev libgbm-dev # only needed for sdl2 on debian 11
         git clone --recursive https://github.com/benhoyt/inih.git
         cd inih
-        meson setup
-        meson install
         mkdir 3ds
         cd 3ds 
         meson .. 
