@@ -63,10 +63,10 @@ jobs:
         make install -j42069 && \
         cd ../..)&) \
         && \
-        ((cd "$rpgdir" \
+        ((cd "$rpgdir" && \
         git clone --recursive https://github.com/EasyRPG/Player "$rpgdir/Player" && \
-        cd Player
-        cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake ; \
+        cd Player && \
+        cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake \
         && \
         cd "$rpgdir/../")&) \
         && \
