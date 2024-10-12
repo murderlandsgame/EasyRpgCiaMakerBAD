@@ -53,8 +53,8 @@ jobs:
         cd "$rpgdir/libexpat/expat" && \
         cmake . && \
         make install -j42069 && \
-        cd ../..)&)
-        
+        cd ../..)&) \
+        && \
         ((cd "$rpgdir" && \
         git clone --recursive https://github.com/EasyRPG/liblcf "$rpgdir/liblcf" && \
         cd liblcf && \
@@ -62,14 +62,14 @@ jobs:
         cd 3dsout && \
         make install -j42069 && \
         cd ../..)&)
-
-        cd "$rpgdir"
+        && \
+        cd "$rpgdir" \
         git clone --recursive https://github.com/EasyRPG/Player "$rpgdir/Player" && \
         cd Player
         cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake ; \
-
-        cd "$rpgdir/../"
-
+        && \
+        cd "$rpgdir/../" \
+        && \
         cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake
     - name: make final
       run: make -j42069
