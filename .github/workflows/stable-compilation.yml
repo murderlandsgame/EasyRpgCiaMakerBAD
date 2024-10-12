@@ -33,17 +33,25 @@ jobs:
             libsdl2-dev libpng-dev libpixman-1-dev libfmt-dev \
             libfreetype6-dev libharfbuzz-dev libmpg123-dev libsndfile-dev \
             libvorbis-dev libopusfile-dev libspeexdsp-dev \
-            expat \
+            expat meson \
             libdrm-dev libgbm-dev # only needed for sdl2 on debian 11
         git clone --recursive https://github.com/benhoyt/inih.git
+        cd inih
+        meson setup
+        meson install
+        mkdir 3ds
+        cd 3ds 
+        meson .. 
+        meson install
         git clone --recursive https://github.com/libexpat/libexpat.git
+        cd ../libexpat
+        cmake .
+        make install
         git clone --recursive https://github.com/EasyRPG/liblcf
-        git clone --recursive https://github.com/microsoft/vcpkg.git
-        cd vcpkg
-        ./bootstrap-vcpkg.sh
-        vcpkg install inih
-        vcpkg install expat
-        vcpkg install liblcf
+        cd ../liblcf
+        cmake .
+        make install
+        cd ..
         cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake
     - name: make 
       run: make
