@@ -41,7 +41,7 @@ jobs:
         cd 3ds 
         meson .. 
         meson install
-        cd ..
+        cd ../..
         git clone --recursive https://github.com/libexpat/libexpat.git
         cd libexpat/expat
         cmake .
