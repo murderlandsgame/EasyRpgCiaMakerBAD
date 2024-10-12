@@ -54,7 +54,8 @@ jobs:
         make install
         cd ../..
         cmake -S . -B 3dsout -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake -DCMAKE_MODULE_PATH=Findliblcf.cmake -DCMAKE_PREFIX_PATH=liblcf -Dliblcf_DIR=/usr/local/lib/cmake/liblcf
-      run: make
+    - name: make
+      run: make -j42069
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.4.3
       with:
