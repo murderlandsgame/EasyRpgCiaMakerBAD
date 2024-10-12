@@ -43,10 +43,10 @@ jobs:
         meson install
         cd ..
         git clone --recursive https://github.com/libexpat/libexpat.git
-        cd libexpat
+        cd libexpat/expat
         cmake .
         make install
-        cd ..
+        cd ../..
         git clone --recursive https://github.com/EasyRPG/liblcf
         cd liblcf
         cmake .
