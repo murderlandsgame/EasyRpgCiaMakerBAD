@@ -19,7 +19,7 @@ defaults:
 
 jobs:
   build:
-    runs-on: ubuntu-dev
+    runs-on: ubuntu-latest
     container: devkitpro/devkitarm:latest
 
     steps:
